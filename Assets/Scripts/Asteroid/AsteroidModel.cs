@@ -1,10 +1,11 @@
 using System;
-using UnityEngine;
 
 [Serializable]
 public class AsteroidModel
 {
     public float hp;
+    public float collisionDamage;
+    public float maxSpeed;
     public event Action OnDeath;
     public event Action OnImpact;
 

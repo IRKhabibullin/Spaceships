@@ -6,6 +6,7 @@ using UnityEngine;
 public class ShipModel
 {
     public float hp;
+    public float collisionDamage;
     public event Action OnDeath;
     public event Action OnImpact;
     public ReactiveProperty<Vector3> velocity { get; private set; }
@@ -17,7 +18,7 @@ public class ShipModel
         velocity = new ReactiveProperty<Vector3>();
     }
 
-    public void ChangeVelocity(Vector3 newValue)
+    public void SetVelocity(Vector3 newValue)
     {
         velocity.Value = newValue * maxSpeed;
     }

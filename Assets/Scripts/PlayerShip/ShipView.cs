@@ -12,4 +12,14 @@ public class ShipView : MonoBehaviour
     {
         _rb.velocity = velocity;
     }
+
+    public void Impact()
+    {
+
+    }
+
+    public void Death()
+    {
+        Destroy(gameObject);
+    }
 }

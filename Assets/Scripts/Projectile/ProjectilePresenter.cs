@@ -10,16 +10,16 @@ public class ProjectilePresenter : MonoBehaviour
     {
         this.OnCollisionEnterAsObservable()
             .Subscribe(collision => {
-                TryImpact(collision.gameObject);
+                var target = collision.gameObject.GetComponent<IDamageable>();
+                if (target != null)
+                    DealDamage(target);
             })
             .AddTo(this);
     }
 
-    private void TryImpact(GameObject target)
+    private void DealDamage(IDamageable target)
     {
-        var damageable = target.GetComponent<IDamageable>();
-        if (damageable != null)
-            damageable.GetDamage(projectileModel.damage);
+        target.GetDamage(projectileModel.damage);
         Destroy(gameObject);
     }
 }
