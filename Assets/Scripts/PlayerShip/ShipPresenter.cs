@@ -2,6 +2,7 @@ using System;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using TMPro;
 
 public class ShipPresenter : MonoBehaviour, IDamageable
 {
@@ -9,6 +10,7 @@ public class ShipPresenter : MonoBehaviour, IDamageable
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform gun;
     [SerializeField] private ShipModel shipModel = new ShipModel();
+    [SerializeField] private TextMeshProUGUI hpBar;
 
     #region life cycle
     private void Start()
@@ -24,12 +26,25 @@ public class ShipPresenter : MonoBehaviour, IDamageable
 
     private void ObserveMovement(IObservable<long> updateLoop)
     {
-        updateLoop
+        Observable.EveryFixedUpdate()
             .Subscribe(_ => {
                 Vector3 movementValue = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
                 shipModel.SetVelocity(movementValue);
             })
             .AddTo(this);
+
+        // Limit movement by asteroid field bounds
+        updateLoop
+            .Subscribe(_ =>
+            {
+                transform.position = new Vector3(
+                    Mathf.Clamp(transform.position.x, -10, 10),
+                    transform.position.y,
+                    transform.position.z
+                );
+            })
+            .AddTo(this);
+
 
         shipModel.velocity
             .ObserveEveryValueChanged(x => x.Value)
@@ -74,11 +89,12 @@ public class ShipPresenter : MonoBehaviour, IDamageable
     private void OnImpactHandler()
     {
         shipView.Impact();
+        hpBar.text = $"Ship status: {(int)(shipModel.hp * 100 / shipModel.maxHp)}%";
     }
 
     private void OnDeathHandler()
     {
-        Debug.Log("Game over");
+        hpBar.text = $"Ship status: destroyed";
         shipView.Death();
     }
     #endregion
@@ -87,6 +103,11 @@ public class ShipPresenter : MonoBehaviour, IDamageable
     public void GetDamage(float damage)
     {
         shipModel.GetDamage(damage);
+    }
+
+    public void ResetPosition()
+    {
+        transform.position = Vector3.zero;
     }
     #endregion
 }

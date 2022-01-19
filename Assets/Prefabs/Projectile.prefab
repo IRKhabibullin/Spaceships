@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3760973320741947832}
   - component: {fileID: 7503042704044367535}
   - component: {fileID: 2081842347623492856}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileModel:
-    damage: 3
+    damage: 1
 --- !u!114 &2081842347623492856
 MonoBehaviour:
   m_ObjectHideFlags: 0

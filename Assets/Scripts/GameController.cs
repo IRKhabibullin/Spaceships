@@ -1,29 +1,28 @@
 using UnityEngine;
-using UniRx;
 using System;
+using UniRx.Triggers;
+using UniRx;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField] private GameObject asteroidPrefab;
     [SerializeField] private float gWidth;
     [SerializeField] private float gDistance;
-    [SerializeField] private float gPeriod;
+    [SerializeField] private LayerMask keepInBounds;
+    public int maxLevel;
 
-    [Range(0, 1)]
-    [SerializeField] private float gChance;
-
-    void Start()
+    private void Start()
     {
-        Observable.EveryUpdate()
-            .ThrottleFirst(TimeSpan.FromSeconds(gPeriod))
-            .Subscribe(_ => GenerateAsteroid())
+        this.OnTriggerExitAsObservable()
+            .Where(collision => (keepInBounds.value & 1 << collision.gameObject.layer) != 0)
+            .Subscribe(collision => {
+                Destroy(collision.gameObject);
+            })
             .AddTo(this);
     }
 
-    private void GenerateAsteroid()
+    public void GenerateAsteroid()
     {
-        if (UnityEngine.Random.Range(0, 1) > gChance)
-            return;
         Instantiate(asteroidPrefab, new Vector3(UnityEngine.Random.Range(-gWidth, gWidth), 0f, gDistance), Quaternion.identity);
     }
 }

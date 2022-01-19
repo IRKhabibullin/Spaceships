@@ -5,6 +5,7 @@ using UnityEngine;
 [Serializable]
 public class ShipModel
 {
+    public float maxHp;
     public float hp;
     public float collisionDamage;
     public event Action OnDeath;
@@ -16,6 +17,7 @@ public class ShipModel
     public ShipModel()
     {
         velocity = new ReactiveProperty<Vector3>();
+        hp = maxHp;
     }
 
     public void SetVelocity(Vector3 newValue)
