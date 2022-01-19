@@ -4,19 +4,21 @@ using UniRx.Triggers;
 using UnityEngine;
 using TMPro;
 
-[RequireComponent(typeof(GameController))]
+[RequireComponent(typeof(AsteroidFieldController))]
 [RequireComponent(typeof(Collider))]
 public class LevelController : MonoBehaviour
 {
-    [SerializeField] private GameController _gc;
+    [SerializeField] private AsteroidFieldController afc;
     [SerializeField] private TextMeshProUGUI asteroidsCountText;
     [SerializeField] private Collider levelFinishLine;
+    [SerializeField] private GameObject asteroidPrefab;
 
     [SerializeField] private float gPeriod;
     [Range(0, 1)]
     [SerializeField] private float gChance;
     [SerializeField] private ReactiveProperty<int> asteroidFieldSize; // number of asteroids on level. After all asteroids are out, level is passed
 
+    [SerializeField] private int maxLevel;
     private int currentLevel;
     private IDisposable asteroidGenerator;
     private IDisposable levelFinishTrigger;
@@ -47,7 +49,7 @@ public class LevelController : MonoBehaviour
             .Subscribe(_ => {
                 if (UnityEngine.Random.Range(0, 1) > gChance)
                     return;
-                _gc.GenerateAsteroid();
+                Instantiate(asteroidPrefab, new Vector3(UnityEngine.Random.Range(-afc.gWidth, afc.gWidth), 0f, afc.gDistance), Quaternion.identity);
                 asteroidFieldSize.Value--;
             })
             .AddTo(this);
@@ -72,14 +74,15 @@ public class LevelController : MonoBehaviour
 
     public void ToNextLevel()
     {
-        if (currentLevel >= _gc.maxLevel)
+        levelFinishTrigger?.Dispose();
+
+        if (currentLevel >= maxLevel)
         {
             Debug.Log("You won!");
             return;
         }
         currentLevel++;
 
-        levelFinishTrigger?.Dispose();
         RandomizeLevelVariables(currentLevel);
         StartGeneration();
     }

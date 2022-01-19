@@ -1,15 +1,13 @@
 using UnityEngine;
-using System;
 using UniRx.Triggers;
 using UniRx;
 
-public class GameController : MonoBehaviour
+public class AsteroidFieldController : MonoBehaviour
 {
-    [SerializeField] private GameObject asteroidPrefab;
-    [SerializeField] private float gWidth;
-    [SerializeField] private float gDistance;
+    public float gWidth;
+    public float gDistance;
+
     [SerializeField] private LayerMask keepInBounds;
-    public int maxLevel;
 
     private void Start()
     {
@@ -19,10 +17,5 @@ public class GameController : MonoBehaviour
                 Destroy(collision.gameObject);
             })
             .AddTo(this);
-    }
-
-    public void GenerateAsteroid()
-    {
-        Instantiate(asteroidPrefab, new Vector3(UnityEngine.Random.Range(-gWidth, gWidth), 0f, gDistance), Quaternion.identity);
     }
 }
