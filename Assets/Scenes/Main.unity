@@ -439,27 +439,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20a55a5a6bc671445b890525ab48afbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  map: {fileID: 1472019603}
+  levelController: {fileID: 1621821667}
   levels:
   - levelIndex: 1
-    levelButton: {fileID: 491261419}
-    levelPath: {fileID: 1826726046}
     state: 2
   - levelIndex: 2
-    levelButton: {fileID: 1804092146}
-    levelPath: {fileID: 1904814339}
     state: 1
   - levelIndex: 3
-    levelButton: {fileID: 792782989}
-    levelPath: {fileID: 1447629604}
     state: 0
   - levelIndex: 4
-    levelButton: {fileID: 1207934982}
-    levelPath: {fileID: 36560276}
     state: 0
   - levelIndex: 5
-    levelButton: {fileID: 511898361}
-    levelPath: {fileID: 568824400}
     state: 0
+  levelButtons:
+  - {fileID: 491261419}
+  - {fileID: 1804092146}
+  - {fileID: 792782989}
+  - {fileID: 1207934982}
+  - {fileID: 511898361}
+  levelPaths:
+  - {fileID: 1826726046}
+  - {fileID: 1904814339}
+  - {fileID: 1447629604}
+  - {fileID: 36560276}
+  - {fileID: 568824400}
 --- !u!4 &161325865
 Transform:
   m_ObjectHideFlags: 0
@@ -473,7 +477,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &267349916
 GameObject:
@@ -2643,9 +2647,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 2, y: 1, z: 2.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1686772700}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1621821667
 MonoBehaviour:
@@ -2663,6 +2668,21 @@ MonoBehaviour:
   asteroidsCountText: {fileID: 267349918}
   levelFinishLine: {fileID: 1686772701}
   asteroidPrefab: {fileID: 8767169164058596035, guid: 29cec55fef2b85b4ea9e244d46b3a538, type: 3}
+  levelPassed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 161325864}
+        m_TargetAssemblyTypeName: MapController, Assembly-CSharp
+        m_MethodName: OnLevelPassed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   gPeriod: 0
   gChance: 0.5
   asteroidFieldSize:
@@ -2847,12 +2867,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1686772699}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 11.875}
-  m_LocalScale: {x: 2, y: 1, z: 0.25}
+  m_LocalPosition: {x: 0, y: 0, z: 2.75}
+  m_LocalScale: {x: 1, y: 1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 1621821666}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1686772701
 MeshCollider:

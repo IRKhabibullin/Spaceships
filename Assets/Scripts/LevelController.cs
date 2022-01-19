@@ -3,6 +3,7 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(AsteroidFieldController))]
 [RequireComponent(typeof(Collider))]
@@ -12,6 +13,7 @@ public class LevelController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI asteroidsCountText;
     [SerializeField] private Collider levelFinishLine;
     [SerializeField] private GameObject asteroidPrefab;
+    public UnityEvent<int> levelPassed;
 
     [SerializeField] private float gPeriod;
     [Range(0, 1)]
@@ -38,8 +40,6 @@ public class LevelController : MonoBehaviour
                     ActivateLevelFinishLine();
                 }
             }).AddTo(this);
-
-        ToNextLevel();
     }
 
     private void StartGeneration()
@@ -61,18 +61,19 @@ public class LevelController : MonoBehaviour
             .Where(collision => collision.gameObject.layer == LayerMask.NameToLayer("PlayerShip"))
             .Subscribe(collision => {
                 collision.gameObject.GetComponent<ShipPresenter>().ResetPosition();
-                ToNextLevel();
+                FinishLevel();
             })
             .AddTo(this);
     }
 
     public void RandomizeLevelVariables(int level)
     {
-        asteroidFieldSize.Value = (int)UnityEngine.Random.Range(3 + level * 4, 5 + level * 5);
+        // asteroidFieldSize.Value = (int)UnityEngine.Random.Range(3 + level * 4, 5 + level * 5);
+        asteroidFieldSize.Value = 1;
         gPeriod = UnityEngine.Random.Range(0.8f - level * 0.1f, 1 - level * 0.1f) * 3;
     }
 
-    public void ToNextLevel()
+    public void FinishLevel()
     {
         levelFinishTrigger?.Dispose();
 
@@ -81,8 +82,13 @@ public class LevelController : MonoBehaviour
             Debug.Log("You won!");
             return;
         }
-        currentLevel++;
 
+        levelPassed?.Invoke(currentLevel);
+    }
+
+    public void StartLevel(int levelIndex)
+    {
+        currentLevel = levelIndex;
         RandomizeLevelVariables(currentLevel);
         StartGeneration();
     }
