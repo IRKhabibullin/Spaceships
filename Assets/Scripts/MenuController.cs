@@ -1,4 +1,3 @@
-using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,7 +8,7 @@ public class MenuController : MonoBehaviour
 
     void Start()
     {
-        if (File.Exists("data"))
+        if (GameModel.HasSavedGame())
         {
             continueButton.gameObject.SetActive(true);
         }
@@ -22,8 +21,8 @@ public class MenuController : MonoBehaviour
 
     public void NewGame()
     {
-        if (File.Exists("data"))
-            File.Delete("data");
+        if (GameModel.HasSavedGame())
+            GameModel.DeleteSavedGame();
         SceneManager.LoadScene("Main");
     }
 

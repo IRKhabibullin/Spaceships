@@ -1,95 +1,45 @@
 using System;
-using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
-using TMPro;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(AsteroidFieldController))]
-[RequireComponent(typeof(Collider))]
+public enum LevelState
+{
+    Closed,
+    Open,
+    Passed
+}
+
+[Serializable]
+public class Level
+{
+    public int levelIndex;
+    public LevelState state = LevelState.Closed;
+    public LevelParameters levelParams;
+
+    public Level(int _index, LevelState _state, LevelParameters _params)
+    {
+        levelIndex = _index;
+        state = _state;
+        levelParams = _params;
+    }
+}
+
+[Serializable]
+public class LevelParameters
+{
+    public int asteroidsCount;
+    public float generationRate;
+}
+
 public class LevelController : MonoBehaviour
 {
     [SerializeField] private AsteroidFieldController afc;
-    [SerializeField] private TextMeshProUGUI asteroidsCountText;
-    [SerializeField] private Collider levelFinishLine;
-    [SerializeField] private GameObject asteroidPrefab;
-    public UnityEvent<int> levelPassed;
 
-    [SerializeField] private float gPeriod;
-    [Range(0, 1)]
-    [SerializeField] private float gChance;
-    [SerializeField] private ReactiveProperty<int> asteroidFieldSize; // number of asteroids on level. After all asteroids are out, level is passed
+    public Level currentLevel;
 
-    [SerializeField] private int maxLevel;
-    private int currentLevel;
-    private IDisposable asteroidGenerator;
-    private IDisposable levelFinishTrigger;
-
-    void Start()
+    public void StartLevel(Level level)
     {
-        currentLevel = 0;
-        asteroidFieldSize = new ReactiveProperty<int>(1);
-        asteroidFieldSize
-            .ObserveEveryValueChanged(x => x.Value)
-            .Subscribe(x =>
-            {
-                asteroidsCountText.text = $"Asteroids left: {x}";
-                if (x <= 0)
-                {
-                    asteroidGenerator?.Dispose();
-                    ActivateLevelFinishLine();
-                }
-            }).AddTo(this);
-    }
-
-    private void StartGeneration()
-    {
-        asteroidGenerator = Observable.EveryUpdate()
-            .ThrottleFirst(TimeSpan.FromSeconds(gPeriod))
-            .Subscribe(_ => {
-                if (UnityEngine.Random.Range(0, 1) > gChance)
-                    return;
-                Instantiate(asteroidPrefab, new Vector3(UnityEngine.Random.Range(-afc.gWidth, afc.gWidth), 0f, afc.gDistance), Quaternion.identity);
-                asteroidFieldSize.Value--;
-            })
-            .AddTo(this);
-    }
-
-    private void ActivateLevelFinishLine()
-    {
-        levelFinishTrigger = levelFinishLine.OnTriggerEnterAsObservable()
-            .Where(collision => collision.gameObject.layer == LayerMask.NameToLayer("PlayerShip"))
-            .Subscribe(collision => {
-                collision.gameObject.GetComponent<ShipPresenter>().ResetPosition();
-                FinishLevel();
-            })
-            .AddTo(this);
-    }
-
-    public void RandomizeLevelVariables(int level)
-    {
-        // asteroidFieldSize.Value = (int)UnityEngine.Random.Range(3 + level * 4, 5 + level * 5);
-        asteroidFieldSize.Value = 1;
-        gPeriod = UnityEngine.Random.Range(0.8f - level * 0.1f, 1 - level * 0.1f) * 3;
-    }
-
-    public void FinishLevel()
-    {
-        levelFinishTrigger?.Dispose();
-
-        if (currentLevel >= maxLevel)
-        {
-            Debug.Log("You won!");
-            return;
-        }
-
-        levelPassed?.Invoke(currentLevel);
-    }
-
-    public void StartLevel(int levelIndex)
-    {
-        currentLevel = levelIndex;
-        RandomizeLevelVariables(currentLevel);
-        StartGeneration();
+        currentLevel = level;
+        afc.StartGeneration(currentLevel.levelParams);
     }
 }

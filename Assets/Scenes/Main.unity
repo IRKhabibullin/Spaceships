@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -419,51 +419,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 161325865}
-  - component: {fileID: 161325864}
+  - component: {fileID: 161325867}
+  - component: {fileID: 161325866}
+  - component: {fileID: 161325868}
   m_Layer: 0
-  m_Name: MapManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &161325864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 161325863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20a55a5a6bc671445b890525ab48afbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  map: {fileID: 1472019603}
-  levelController: {fileID: 1621821667}
-  levels:
-  - levelIndex: 1
-    state: 2
-  - levelIndex: 2
-    state: 1
-  - levelIndex: 3
-    state: 0
-  - levelIndex: 4
-    state: 0
-  - levelIndex: 5
-    state: 0
-  levelButtons:
-  - {fileID: 491261419}
-  - {fileID: 1804092146}
-  - {fileID: 792782989}
-  - {fileID: 1207934982}
-  - {fileID: 511898361}
-  levelPaths:
-  - {fileID: 1826726046}
-  - {fileID: 1904814339}
-  - {fileID: 1447629604}
-  - {fileID: 36560276}
-  - {fileID: 568824400}
 --- !u!4 &161325865
 Transform:
   m_ObjectHideFlags: 0
@@ -479,6 +444,67 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &161325866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161325863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 148c088ac55dd634d9988228b1b212a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map: {fileID: 1472019603}
+  levelButtons:
+  - {fileID: 491261419}
+  - {fileID: 1804092146}
+  - {fileID: 792782989}
+  - {fileID: 1207934982}
+  - {fileID: 511898361}
+  levelPaths:
+  - {fileID: 1826726046}
+  - {fileID: 1904814339}
+  - {fileID: 1447629604}
+  - {fileID: 36560276}
+  - {fileID: 568824400}
+--- !u!114 &161325867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161325863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f53a35ac891f03644b748edbd2f8985f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameModel:
+    levels: []
+    maxLevel: 5
+  gameView: {fileID: 161325866}
+  levelController: {fileID: 161325868}
+--- !u!114 &161325868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161325863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a33f7ebf07a46474e88c0194b9bf8efd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  afc: {fileID: 1621821668}
+  currentLevel:
+    levelIndex: 0
+    state: 0
+    levelParams:
+      asteroidsCount: 0
+      generationRate: 0
 --- !u!1 &267349916
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,7 +976,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1062,7 +1088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1723,7 +1749,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2107,7 +2133,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2421,7 +2447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2564,7 +2590,6 @@ GameObject:
   - component: {fileID: 1621821664}
   - component: {fileID: 1621821663}
   - component: {fileID: 1621821668}
-  - component: {fileID: 1621821667}
   m_Layer: 0
   m_Name: AsteroidsField
   m_TagString: Untagged
@@ -2652,42 +2677,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1621821667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1621821662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a33f7ebf07a46474e88c0194b9bf8efd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  afc: {fileID: 1621821668}
-  asteroidsCountText: {fileID: 267349918}
-  levelFinishLine: {fileID: 1686772701}
-  asteroidPrefab: {fileID: 8767169164058596035, guid: 29cec55fef2b85b4ea9e244d46b3a538, type: 3}
-  levelPassed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 161325864}
-        m_TargetAssemblyTypeName: MapController, Assembly-CSharp
-        m_MethodName: OnLevelPassed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  gPeriod: 0
-  gChance: 0.5
-  asteroidFieldSize:
-    value: 0
-  maxLevel: 5
 --- !u!114 &1621821668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2702,9 +2691,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gWidth: 10
   gDistance: 15
+  asteroidFieldSize:
+    value: 0
+  asteroidsCountText: {fileID: 267349918}
+  asteroidPrefab: {fileID: 8767169164058596035, guid: 29cec55fef2b85b4ea9e244d46b3a538, type: 3}
+  levelFinishLine: {fileID: 1686772701}
   keepInBounds:
     serializedVersion: 2
     m_Bits: 320
+  onFinishLineReached:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 161325867}
+        m_TargetAssemblyTypeName: GamePresenter, Assembly-CSharp
+        m_MethodName: OnLevelPassed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1625116995
 GameObject:
   m_ObjectHideFlags: 0
@@ -2999,7 +3008,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -3187,7 +3196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
