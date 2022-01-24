@@ -1,3 +1,4 @@
+using UniRx;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -7,7 +8,11 @@ public class AsteroidView : MonoBehaviour
 
     void Start()
     {
-        
+        Observable.EveryUpdate()
+            .Subscribe(_ => {
+                transform.Rotate(0, 0, 50 * Time.deltaTime);
+            })
+            .AddTo(this);
     }
 
     public void SetVelocity(Vector3 newValue)

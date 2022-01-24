@@ -60,7 +60,7 @@ public class AsteroidFieldController : MonoBehaviour
         levelFinishTrigger = levelFinishLine.OnTriggerEnterAsObservable()
             .Where(collision => collision.gameObject.layer == LayerMask.NameToLayer("PlayerShip"))
             .Subscribe(collision => {
-                collision.gameObject.GetComponent<ShipPresenter>().ResetPosition();
+                collision.gameObject.GetComponentInParent<ShipPresenter>().ResetPosition();
                 levelFinishTrigger?.Dispose();
                 onFinishLineReached?.Invoke();
             })
