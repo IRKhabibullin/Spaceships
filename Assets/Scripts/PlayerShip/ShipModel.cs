@@ -1,6 +1,7 @@
 using System;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Events;
 
 [Serializable]
 public class ShipModel
@@ -8,7 +9,7 @@ public class ShipModel
     public float maxHp;
     public float hp;
     public float collisionDamage;
-    public event Action OnDeath;
+    public UnityEvent OnDeath;
     public event Action OnImpact;
     public ReactiveProperty<Vector3> velocity { get; private set; }
     public float maxSpeed;

@@ -1,15 +1,19 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GamePresenter : MonoBehaviour
 {
     [SerializeField] private GameModel gameModel = new GameModel();
     [SerializeField] private GameView gameView;
     [SerializeField] private LevelController levelController;
+    [SerializeField] private GameObject gameFinishPanel;
 
     void Start()
     {
         gameModel.LoadGame();
         gameView.InitMap(gameModel.levels);
+        gameView.ToggleMap(true);
     }
 
     public void OnLevelSelected(int levelIndex)
@@ -25,8 +29,21 @@ public class GamePresenter : MonoBehaviour
 
         if (levelController.currentLevel.levelIndex >= gameModel.maxLevel)
         {
-            Debug.Log("You won!");
+            gameFinishPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Victory!";
+            gameFinishPanel.SetActive(true);
             return;
         }
+    }
+
+    public void GameOver()
+    {
+        //gameView.ToggleMap(true);
+        gameFinishPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Game over";
+        gameFinishPanel.SetActive(true);
+    }
+
+    public void QuitToMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }

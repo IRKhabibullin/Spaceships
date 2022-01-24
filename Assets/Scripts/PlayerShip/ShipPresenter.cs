@@ -11,11 +11,12 @@ public class ShipPresenter : MonoBehaviour, IDamageable
     [SerializeField] private Transform gun;
     [SerializeField] private ShipModel shipModel = new ShipModel();
     [SerializeField] private TextMeshProUGUI hpBar;
+    private bool canMove = false;
 
     #region life cycle
     private void Start()
     {
-        shipModel.OnDeath += OnDeathHandler;
+        shipModel.OnDeath.AddListener(OnDeathHandler);
         shipModel.OnImpact += OnImpactHandler;
 
         IObservable<long> updateLoop = Observable.EveryUpdate();
@@ -28,6 +29,7 @@ public class ShipPresenter : MonoBehaviour, IDamageable
     {
         Observable.EveryFixedUpdate()
             .Subscribe(_ => {
+                if (!canMove) return;
                 Vector3 movementValue = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
                 shipModel.SetVelocity(movementValue);
             })
@@ -80,7 +82,7 @@ public class ShipPresenter : MonoBehaviour, IDamageable
 
     private void OnDestroy()
     {
-        shipModel.OnDeath -= OnDeathHandler;
+        shipModel.OnDeath.RemoveListener(OnDeathHandler);
         shipModel.OnImpact -= OnImpactHandler;
     }
     #endregion
@@ -103,6 +105,12 @@ public class ShipPresenter : MonoBehaviour, IDamageable
     public void GetDamage(float damage)
     {
         shipModel.GetDamage(damage);
+    }
+
+    public void ToggleMovement(bool value)
+    {
+        shipModel.SetVelocity(Vector3.zero);
+        canMove = value;
     }
 
     public void ResetPosition()

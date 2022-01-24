@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class GameView : MonoBehaviour
 {
     [SerializeField] private GameObject map;
+    [SerializeField] private GameObject shipInterface;
     [SerializeField] private List<Button> levelButtons;
     [SerializeField] private List<Image> levelPaths;
+    public UnityEvent<int> levelSelected;
 
     Dictionary<LevelState, Color> levelStateColors = new Dictionary<LevelState, Color>()
     {
@@ -17,13 +20,12 @@ public class GameView : MonoBehaviour
 
     public void InitMap(List<Level> levels)
     {
-        GamePresenter _gp = gameObject.GetComponent<GamePresenter>();
         foreach (Level level in levels)
         {
             levelButtons[level.levelIndex].onClick.AddListener(() =>
             {
                 ToggleMap(false);
-                _gp.OnLevelSelected(level.levelIndex);
+                levelSelected?.Invoke(level.levelIndex);
             });
         }
         RedrawMap(levels);
@@ -42,6 +44,7 @@ public class GameView : MonoBehaviour
 
     public void ToggleMap(bool value)
     {
+        shipInterface.SetActive(!value);
         map.SetActive(value);
     }
 }
