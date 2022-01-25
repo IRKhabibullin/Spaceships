@@ -27,8 +27,7 @@ public class GameModel
     private LevelParameters GetLevelParameters(int level)
     {
         LevelParameters levelParams = new LevelParameters();
-        // levelParams.asteroidsCount = (int)UnityEngine.Random.Range(3 + level * 4, 5 + level * 5);
-        levelParams.asteroidsCount = 3;
+        levelParams.asteroidsCount = (int)UnityEngine.Random.Range(3 + level * 4, 5 + level * 5);
         levelParams.generationRate = UnityEngine.Random.Range(0.8f - level * 0.1f, 1 - level * 0.1f) * 3;
         return levelParams;
     }

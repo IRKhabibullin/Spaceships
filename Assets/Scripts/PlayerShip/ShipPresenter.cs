@@ -42,7 +42,7 @@ public class ShipPresenter : MonoBehaviour, IDamageable
                 transform.position = new Vector3(
                     Mathf.Clamp(transform.position.x, -10, 10),
                     transform.position.y,
-                    transform.position.z
+                    Mathf.Clamp(transform.position.z, -2, 12)
                 );
             })
             .AddTo(this);

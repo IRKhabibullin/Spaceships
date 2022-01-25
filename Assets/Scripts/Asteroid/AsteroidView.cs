@@ -20,10 +20,6 @@ public class AsteroidView : MonoBehaviour
         _rb.velocity = newValue;
     }
 
-    public void Impact()
-    {
-    }
-
     public void Death()
     {
         Destroy(gameObject);

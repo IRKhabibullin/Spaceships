@@ -12,7 +12,6 @@ public class AsteroidPresenter : MonoBehaviour, IDamageable
     {
         asteroidView.SetVelocity(new Vector3(0, 0, -asteroidModel.maxSpeed));
         asteroidModel.OnDeath += OnDeathHandler;
-        asteroidModel.OnImpact += OnImpactHandler;
 
         this.OnCollisionEnterAsObservable()
             .Subscribe(collision => {
@@ -26,15 +25,10 @@ public class AsteroidPresenter : MonoBehaviour, IDamageable
     private void OnDestroy()
     {
         asteroidModel.OnDeath -= OnDeathHandler;
-        asteroidModel.OnImpact -= OnImpactHandler;
     }
     #endregion
 
     #region event handlers
-    private void OnImpactHandler()
-    {
-        asteroidView.Impact();
-    }
 
     private void OnDeathHandler()
     {

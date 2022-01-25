@@ -24,20 +24,19 @@ public class GamePresenter : MonoBehaviour
     public void OnLevelPassed()
     {
         gameModel.PassLevel(levelController.currentLevel.levelIndex);
-        gameView.RedrawMap(gameModel.levels);
-        gameView.ToggleMap(true);
 
-        if (levelController.currentLevel.levelIndex >= gameModel.maxLevel)
+        if (levelController.currentLevel.levelIndex >= gameModel.maxLevel - 1)
         {
             gameFinishPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Victory!";
             gameFinishPanel.SetActive(true);
             return;
         }
+        gameView.RedrawMap(gameModel.levels);
+        gameView.ToggleMap(true);
     }
 
     public void GameOver()
     {
-        //gameView.ToggleMap(true);
         gameFinishPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Game over";
         gameFinishPanel.SetActive(true);
     }
